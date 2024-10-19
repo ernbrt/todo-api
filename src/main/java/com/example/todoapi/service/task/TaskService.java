@@ -1,6 +1,8 @@
 package com.example.todoapi.service.task;
 
+import com.example.todoapi.repository.task.TaskRecord;
 import com.example.todoapi.repository.task.TaskRepository;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,5 +14,11 @@ public class TaskService {
         return taskRepository.select(taskId)
                 .map(record->new TaskEntity(record.getId(), record.getTitle()))
                 .orElseThrow(()-> new TaskEntityNotFountException(taskId));
+    }
+
+    public TaskEntity create(@NotNull String title) {
+        var record = new TaskRecord(null, title);
+        taskRepository.insert(record);
+        return new TaskEntity(record.getId(), record.getTitle());
     }
 }
