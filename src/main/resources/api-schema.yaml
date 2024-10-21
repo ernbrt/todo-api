@@ -117,6 +117,40 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResourceNotFoundError"
+    put:
+      summary: "タスク更新"
+      description: "指定されたタスクをリクエストボディの内容で更新します"
+      operationId: "editTask"
+      tags:
+        - tasks
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          description: "更新するタスクのID"
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TaskForm"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TaskDTO"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
 components:
   schemas:
     TaskForm:
