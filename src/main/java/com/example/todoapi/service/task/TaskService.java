@@ -34,6 +34,8 @@ public class TaskService {
     }
 
     public TaskEntity update(Long taskId, String title) {
+        taskRepository.select(taskId)
+                        .orElseThrow(() -> new TaskEntityNotFountException(taskId));
         taskRepository.update(new TaskRecord(taskId, title));
         return find(taskId);
     }
